@@ -1,2 +1,2 @@
-## kinto-contracts-helpers
-Kinto interfaces and helpers with minimal dependencies.
+# kinto-contracts-helpers
+Kinto interfaces and helpers with minimal dependencies
