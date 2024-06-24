@@ -2,7 +2,7 @@
 pragma solidity ^0.8.18;
 
 import "account-abstraction/interfaces/IEntryPoint.sol";
-import "../interfaces/IKintoWallet.sol";
+import "./interfaces/IKintoWallet.sol";
 
 import "./UserOp.sol";
 

@@ -6,7 +6,7 @@ import "forge-std/Test.sol";
 import "account-abstraction/interfaces/IEntryPoint.sol";
 import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
 
-import "../IKintoWallet.sol";
+import "./interfaces/IKintoWallet.sol";
 import "./SignerHelper.sol";
 
 import "forge-std/Vm.sol";
