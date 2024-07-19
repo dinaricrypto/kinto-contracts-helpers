@@ -10,12 +10,15 @@ interface IKintoAppRegistry {
     error KYCRequired(); // KYC Required
     error AlreadyRegistered(); // App already registered
     error ParentAlreadyChild(); // Parent contract is already registered as a child
+    error ChildAlreadyRegistered(); // Children already registered
     error CannotRegisterWallet(); // Wallets can not be registered
     error OnlyAppDeveloper(); // Only app developer can update metadata
     error LengthMismatch();
     error InvalidSponsorSetter(); // "Only developer can set sponsored contracts"
     error DSAAlreadyEnabled(); // DSA already enabled
     error OnlyMintingAllowed(); // Only mint transfers are allowed
+    error InvalidWallet(address);
+    error DevEoaIsContract(address);
 
     /* ============ Structs ============ */
 
@@ -27,6 +30,8 @@ interface IKintoAppRegistry {
         uint256 gasLimitPeriod;
         uint256 gasLimitCost; // in eth
         string name;
+        address[] devEOAs;
+        address[] appContracts;
     }
 
     /* ============ State Change ============ */
@@ -35,7 +40,8 @@ interface IKintoAppRegistry {
         string calldata _name,
         address parentContract,
         address[] calldata appContracts,
-        uint256[4] calldata appLimits
+        uint256[4] calldata appLimits,
+        address[] calldata devEOAs
     ) external;
 
     function enableDSA(address app) external;
@@ -46,8 +52,13 @@ interface IKintoAppRegistry {
         string calldata _name,
         address parentContract,
         address[] calldata appContracts,
-        uint256[4] calldata appLimits
+        uint256[4] calldata appLimits,
+        address[] calldata devEOAs
     ) external;
+
+    function overrideChildToParentContract(address child, address parent) external;
+
+    function updateSystemContracts(address[] calldata newSystemContracts) external;
 
     /* ============ Basic Viewers ============ */
 
@@ -72,6 +83,14 @@ interface IKintoAppRegistry {
     function kintoID() external view returns (IKintoID);
 
     function tokenIdToApp(uint256 _tokenId) external view returns (address);
+
+    function devEoaToApp(address _eoa) external view returns (address);
+
+    function systemContracts(uint256 index) external view returns (address);
+
+    function isSystemContract(address addr) external view returns (bool);
+
+    function deployerToWallet(address addr) external view returns (address);
 
     /* ============ Constants and attrs ============ */
 
